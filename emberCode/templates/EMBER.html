@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Project STARVE </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/owl-carousel/css/owl.theme.default.min.css')}}">
+    <link href="{{ url_for('static', filename='vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <!-- Logo Goes Here -->
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <!-- Progress And Status Bar -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header d-block">
+                            <h6 class="mb-0 subtitle" id="robotStatus">No Signal</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="progress">
+                                <!-- Modify the % par -->
+                                <div class="progress-bar bg-info progress-bar-striped" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 10%; height:10px;" role="progressbar">
+                                    <span class="sr-only">85% Complete (success)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <!-- <li class="nav-label first"><b>Environment Sensors</b></li> -->
+                    <li class="nav-label first"> Voltage <span class="badge badge-primary badge-pill"><span id = displayVoltage>---</span>V</span></li>
+                    <li class="nav-label first"> Humidity<span class="badge badge-primary badge-pill">INT: <span id = displayInternalHumidity>---</span>%</span><br><span class="badge badge-primary badge-pill">EXT: <span id = displayExternalHumidity>---</span>%</span></li>
+                    <li class="nav-label first"> Temperature<span class="badge badge-primary badge-pill">INT:<span id = displayInternalTemp>---</span>°C</span><br><span class="badge badge-primary badge-pill">EXT: <span id = displayExternalTemp>---</span>°C</span></li>
+                </ul>
+
+                <!-- <ul class="metismenu" id="menu">
+                    <li class="nav-label first"><b>Quick Controls</b></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Deploy Payload</button></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Retract Payload</button></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Get RF Distance</button></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Toggle Lights</button></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Return Home</button></li>
+                    <li class="nav-label first"><button class="btn btn-primary" type="button">Set Waypoint</button></li>
+                </ul> -->
+
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first"><b>Manual Controls</b></li>
+                    <!-- <li><button type="button" class="btn btn-success">Connected</button></li> -->
+                    <li><button type="button" class="btn btn-danger" id="ctrlStatus">
+                        L:<span id="leftDriveCtrl">--</span> 
+                        R:<span id="rightDriveCtrl">--</span> 
+                        P:<span id="pitchDriveCtrl">--</span> 
+                        Y:<span id="yawDriveCtrl">--</span> 
+                        H:<span id="heightDriveCtrl">--</span> 
+                        B:<span id="baseAngle">--</span> 
+                        LIG:<span id="lightsCtrl">--</span> 
+                    </button></li>
+                    
+                </ul>
+            </div>
+
+
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        
+        <div class="content-body">
+            <div class="container-fluid">
+
+                <!-- Cameras amnd Maps -->
+                <div class="row">
+                    <!-- <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Drive Camera</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-8">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Payload / Drive Camera</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-8">
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Map</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-8">
+                                        <gmp-map 
+                                        id="map"
+                                        center="0,0"
+                                        zoom="0"
+                                        map-id="DEMO_MAP_ID"
+                                        style="height: 400px"
+                                        controls="false"
+                                        >
+                                        
+                                        <gmp-advanced-marker
+                                        id = currentPosition
+                                        position="37.4220656,-122.0840897"
+                                        title="Gluttony"
+                                        ></gmp-advanced-marker>
+                                        <gmp-advanced-marker
+                                        id =targetPosition
+                                        position="47.648994,-122.3503845"
+                                        title="Target Position"
+                                        ></gmp-advanced-marker>
+                                        </gmp-map>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Graphs -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Live Data -->
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Nav tabs -->
+                                <div class="default-tab">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#general">General</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#voltage">Voltage</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#environment">Environment</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#imu-gryo">IMU GRYO</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#imu-mag">IMU MAG</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#imu-accel">IMU ACCEL</a>
+                                        </li>
+                                        
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="general" role="tabpanel">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">General Data</h4>
+                                                    <!-- <div class="card">
+                                                        <div class="card-header">
+                                                            <h4 class="card-title">Web Server</h4>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="cpu-load-chart">
+                                                                <div id="cpu-load" class="cpu-load"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                                <ul class="metismenu">
+                                                    <li class="nav-label first"> GPS LAT/LON <span class="badge badge-primary badge-pill"><span id = gpsLat>---</span></span><span class="badge badge-primary badge-pill"><span id = gpsLon>---</span></span></li>
+                                                    <li class="nav-label first"> Range Finder <span class="badge badge-primary badge-pill"><span id = range>---</span>M</span></li>
+                                                </ul>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="voltage">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Voltage Data</h4>
+                                                </div>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="environment">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Environment Data</h4>
+                                                </div>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="imu-gryo">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">IMU GYRO</h4>
+                                                </div>
+                                                <ul class="metismenu">
+                                                    <li class="nav-label first"> X-Tilt <span class="badge badge-primary badge-pill"><span id = xTilt>---</span>°</span></li>
+                                                    <li class="nav-label first"> Y-Tilt <span class="badge badge-primary badge-pill"><span id = yTilt>---</span>°</span></li>
+                                                    <li class="nav-label first"> Z-Tilt <span class="badge badge-primary badge-pill"><span id = zTilt>---</span>°</span></li>
+                                                </ul>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="imu-mag">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">IMU-MAG</h4>
+                                                </div>
+                                                <ul class="metismenu">
+                                                    <li class="nav-label first"> X-Mag <span class="badge badge-primary badge-pill"><span id = xMag>---</span>°</span></li>
+                                                    <li class="nav-label first"> Y-Mag <span class="badge badge-primary badge-pill"><span id = yMag>---</span>°</span></li>
+                                                    <li class="nav-label first"> Z-Mag <span class="badge badge-primary badge-pill"><span id = zMag>---</span>°</span></li>
+                                                </ul>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="imu-accel">
+                                            <div class="pt-4">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">IMU ACCEL</h4>
+                                                </div>
+                                                <ul class="metismenu">
+                                                    <li class="nav-label first"> X-Accel <span class="badge badge-primary badge-pill"><span id = xAccel>---</span>m/s²</span></li>
+                                                    <li class="nav-label first"> Y-Accel <span class="badge badge-primary badge-pill"><span id = yAccel>---</span>m/s²</span></li>
+                                                    <li class="nav-label first"> Z-Accel <span class="badge badge-primary badge-pill"><span id = zAccel>---</span>m/s²</span></li>
+                                                </ul>
+                                                <!-- <div class="card-body">
+                                                    <div class="cpu-load-chart">
+                                                        <div id="cpu-load" class="cpu-load"></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    
+   
+    
+    <!-- Required vendors -->
+    <script src="{{ url_for('static', filename='vendor/global/global.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/quixnav-init.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/custom.min.js')}}"></script>
+
+
+    <!-- Vectormap -->
+    <script src="{{ url_for('static', filename='vendor/raphael/raphael.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/morris/morris.min.js')}}"></script>
+
+
+    <script src="{{ url_for('static', filename='vendor/circle-progress/circle-progress.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/chart.js/Chart.bundle.min.js')}}"></script>
+
+    <script src="{{ url_for('static', filename='vendor/gaugeJS/dist/gauge.min.js')}}"></script>
+
+    <!--  flot-chart js -->
+    <script src="{{ url_for('static', filename='vendor/flot/jquery.flot.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/flot/jquery.flot.resize.js')}}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{{ url_for('static', filename='vendor/owl-carousel/js/owl.carousel.min.js')}}"></script>
+
+    <!-- Counter Up -->
+    <script src="{{ url_for('static', filename='vendor/jqvmap/js/jquery.vmap.min.j')}}s"></script>
+    <script src="{{ url_for('static', filename='vendor/jqvmap/js/jquery.vmap.usa.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+    <script src="{{ url_for('static', filename='')}}/js/dashboard/dashboard-1.js"></script>
+
+    <!-- CTRL Communication -->
+    <script type="module" src="{{ url_for('static', filename='js/ctrl.js')}}"></script>
+
+     <!-- Websocket -->
+     <script src="{{ url_for('static', filename='js/socketiomin4-0.js')}}"></script>
+     <!-- <script src="https://cdnjs.cloudfare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> -->
+     <script type="module" src="{{ url_for('static', filename='js/ws.js')}}"></script>
+    
+
+    <!-- <script src="{{ url_for('static', filename='js/graphs.js')}}"></script> -->
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&libraries=maps,marker" defer></script>
+</body>
+
+</html>
