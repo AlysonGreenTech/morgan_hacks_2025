@@ -66,19 +66,15 @@ def drive(L,R):
 
 
 # Servo Motors
-def actuation(pitchDeg, yawDeg, armHeight, baseDeg):
+def actuation(pitchDeg, yawDeg, baseDeg):
     move = ServoKit(channels = 16)
     base = 0
     baseRef = 1
     yaw = 2
     pitch = 3
-    linact = 4
 
     move.servo[base].angle = int(baseDeg)
     move.servo[baseRef].angle = (-1*baseDeg) +180
     move.servo[yaw].angle = yawDeg    
     move.servo[pitch].angle = pitchDeg
-    move.servo[linact].angle = armHeight
-
-drive(.2,.2)
 

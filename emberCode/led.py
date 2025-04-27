@@ -2,6 +2,9 @@ import time
 import board
 import neopixel
 
+def buzzer():
+    print("Buzzer is on")
+    time.sleep(0.1)
 
 def power_on():
     pixel_pin = board.D18

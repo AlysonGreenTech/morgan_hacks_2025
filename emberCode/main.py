@@ -5,12 +5,11 @@ import time
 import envSensor as env 
 import imu
 import gps
-import rangeFinder
 import os
 import asyncio
 import motorControl as mc
 
-
+# Global Variables
 temp = 0
 barometer = 0
 accel_x = 0
@@ -51,62 +50,38 @@ def handleMsg(msg):
     # Step 1: Send Sensor Data over WebSocket
     # print(msg)
     if msg == "Controller Connected":
-        socketio.send([voltage, 
-                   internal_temp, internal_humidity,
-                   external_temp, external_humidity,
-                   pyr_x, pyr_y, pyr_z, 
-                   accel_x, accel_y, accel_z, 
-                   mag_x, mag_y, mag_z,
+        socketio.send([temp, barometer,
+                   accel_x, accel_y, accel_z,
                    gps_lat, gps_lon,
-                   range_finder])
+                   motion_detection])
     else:
         mc.drive(msg[0],msg[1])
         mc.actuation(msg[2],msg[3],msg[4],msg[5])
-        socketio.send([voltage, 
-                   internal_temp, internal_humidity,
-                   external_temp, external_humidity,
-                   pyr_x, pyr_y, pyr_z, 
-                   accel_x, accel_y, accel_z, 
-                   mag_x, mag_y, mag_z,
+        effect.led(msg[6])
+        effect.buzzer(msg[7])
+        socketio.send([temp, barometer,
+                   accel_x, accel_y, accel_z,
                    gps_lat, gps_lon,
-                   range_finder])
+                   motion_detection])
     # print("Message Received: " + msg)
 
 # Async updates
-async def update_voltage():
-    global voltage
+async def update_barometer():
+    global barometer
     while True:
-        voltage = env.getVoltage()
-        await asyncio.sleep(0.1)
+        barometer = env.getBaro()
+        await asyncio.sleep(0.4)
 
-async def update_internal_temp():
-    global internal_temp
+async def update_temp():
+    global temp
     while True:
-        internal_temp = env.getInternalTemp()
-        await asyncio.sleep(0.1)
-
-async def update_internal_humidity():
-    global internal_humidity
-    while True:
-        internal_humidity = env.getInternalHumidity()
-        await asyncio.sleep(0.1)
-
-async def update_external_temp():
-    global external_temp
-    while True:
-        external_temp = env.getExternalTemp()
-        await asyncio.sleep(0.1)
-
-async def update_external_humidity():
-    global external_humidity
-    while True:
-        external_humidity = env.getExternalHumidity()
-        await asyncio.sleep(0.1)
+        temp = env.getTemp()
+        await asyncio.sleep(0.4)
 
 async def update_imu():
-    global pyr_x, pyr_y, pyr_z, accel_x, accel_y, accel_z, mag_x, mag_y, mag_z
+    global accel_x, accel_y, accel_z
     while True:
-        pyr_x, pyr_y, pyr_z, accel_x, accel_y, accel_z, mag_x, mag_y, mag_z = imu.getIMU()
+        accel_x, accel_y, accel_z = imu.getIMU()
         await asyncio.sleep(0.4)
 
 async def update_gps():
@@ -117,23 +92,22 @@ async def update_gps():
             gps_lat, gps_lon = new_lat, new_lon
         await asyncio.sleep(60)
 
-async def update_rangefinder():
-    global range_finder
+async def update_motion():
+    global motion_detection
     while True:
-        range_finder = rangeFinder.getLidarData()
-        await asyncio.sleep(5)
+        motion_detection = imu.getMotion()
+        await asyncio.sleep(0.4)
+
+
 
 # Run both coroutines concurrently
 async def updateAllSensors():
     await asyncio.gather(
-        update_voltage(),
-        update_internal_temp(),
-        update_internal_humidity(),
-        update_external_temp(),
-        update_external_humidity(),
+        update_barometer(),
+        update_temp(),
+        update_motion(),
         update_imu(),
-        update_gps(),
-        update_rangefinder()
+        update_gps()
     )
 
 # Start Flask Server w/ SocketIO
