@@ -120,4 +120,4 @@ if __name__ == "__main__":
     Thread(target=start_async_tasks, daemon=True).start()
 
     # Run the Flask-SocketIO server
-    socketio.run(app, host=server_ip, port=5000)
+    socketio.run(app, host=server_ip, port=4040)
