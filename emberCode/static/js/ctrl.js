@@ -19,7 +19,7 @@ var currentBase = 10;
 var currentDriveR = 0;
 var currentDriveL = 0;
 var currentLightsStatus = false;
-var currentBuzzer
+var currentBuzzer = false
 
 // Check for initial gamepad connection
 var haveEvents = 'GamepadEvent' in window; // is there a case of gamepad usage in the window
@@ -136,6 +136,8 @@ function speedControl(anaNum) {
     else if (anaNum > deadzone){
       return 1
     }
+    else
+      return 0
   }
 
 // Socket.io Variables
@@ -218,6 +220,14 @@ socket.on('message', function (msg) {
     }
     if (gamepads[0].buttons[0].pressed) { // Lights Off
       currentLightsStatus = false;
+    }
+    
+    // Horn
+    if (gamepads[0].buttons[1].pressed) { // Horn On
+      currentBuzzer = true;
+    }
+    if (gamepads[0].buttons[2].pressed) { // Horn Off
+      currentBuzzer = false;
     }
 
     htmlLeftAnalog.textContent = currentDriveL;

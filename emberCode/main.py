@@ -8,6 +8,7 @@ import gps
 import os
 import asyncio
 import motorControl as mc
+import led as effect
 
 # Global Variables
 temp = 0
@@ -57,8 +58,8 @@ def handleMsg(msg):
     else:
         mc.drive(msg[0],msg[1])
         mc.actuation(msg[2],msg[3],msg[4])
-        effect.led(msg[5])
-        effect.buzzer(msg[6])
+        # effect.led(msg[5])
+        # effect.buzzer(msg[6])
         socketio.send([temp, barometer,
                    accel_x, accel_y, accel_z,
                    gps_lat, gps_lon,
