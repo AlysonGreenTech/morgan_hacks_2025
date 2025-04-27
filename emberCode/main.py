@@ -24,7 +24,7 @@ motion_detection = 0
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")  # Rename this variable to avoid conflict
 print("Flask SocketIO initialized")
-server_ip = "127.0.0.1"  # Use the standard library socket module
+server_ip = "0.0.0.0"  # Use the standard library socket module
 
 # Main page
 @app.route("/")
@@ -120,4 +120,4 @@ if __name__ == "__main__":
     Thread(target=start_async_tasks, daemon=True).start()
 
     # Run the Flask-SocketIO server
-    socketio.run(app, host=server_ip, port=4040)
+    socketio.run(app, host=server_ip, port=5000)
