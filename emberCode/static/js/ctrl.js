@@ -4,10 +4,8 @@ const htmlLeftAnalog = document.getElementById('leftDriveCtrl');
 const htmlPitch = document.getElementById('pitchDriveCtrl');
 const htmlYaw = document.getElementById('yawDriveCtrl');
 const htmlLights = document.getElementById('lightsCtrl');
-const htmlbaseAngle = document.getElementById('baseAngle');
-const mapElement = document.getElementById("map");
-const mapCurrentPosition = document.getElementById("currentPosition");
-const mapTargetPosition = document.getElementById("targetPosition");
+const htmlBaseAngle = document.getElementById('baseAngle');
+const htmlBuzzer = document.getElementById('buzzer')
 
 // Create Gamepad Constants
 window.gamepads = null;
@@ -21,6 +19,7 @@ var currentBase = 10;
 var currentDriveR = 0;
 var currentDriveL = 0;
 var currentLightsStatus = false;
+var currentBuzzer
 
 // Check for initial gamepad connection
 var haveEvents = 'GamepadEvent' in window; // is there a case of gamepad usage in the window
@@ -129,54 +128,33 @@ function scanGamepads() {
 }
 
 function speedControl(anaNum) {
-    var max = 0.2
     var deadzone = 0.05
    
-    if (anaNum < -deadzone){
-      if (Math.abs(anaNum) >= max) {
-        return -max;
-      } else {
-        return anaNum;
-      }
-    } else if (anaNum >= -deadzone && anaNum <= deadzone) {
-        return 0
-    } else if (anaNum > deadzone){
-      if (Math.abs(anaNum) >= max) {
-        return max;
-      } else {
-        return anaNum;
-      }
-    } else {
-      return 0
+    if (anaNum < -deadzone) {
+      return -1
+    }
+    else if (anaNum > deadzone){
+      return 1
     }
   }
 
 // Socket.io Variables
 const serverIp = "{{ server_ip }}";
-const socket = io(`https://fond-jointly-oryx.ngrok-free.app/`);
+const socket = io(`192.168.128.191:5000`);
 socket.on('connect',function(){
     document.getElementById("robotStatus").innerHTML = `${new Date().toISOString()}: ` + "WSIO Status: Connected";
 })
 
 socket.on('message', function (msg) {
   if (msg.length != 0) {
-    document.getElementById("displayVoltage").innerHTML = msg[0];
-    document.getElementById("displayInternalTemp").innerHTML = msg[1];
-    document.getElementById("displayInternalHumidity").innerHTML = msg[2];
-    document.getElementById("displayExternalTemp").innerHTML = msg[3];
-    document.getElementById("displayExternalHumidity").innerHTML = msg[4];
-    document.getElementById("xTilt").innerHTML = msg[5];
-    document.getElementById("yTilt").innerHTML = msg[6];
-    document.getElementById("zTilt").innerHTML = msg[7];
-    document.getElementById("xAccel").innerHTML = msg[8];
-    document.getElementById("yAccel").innerHTML = msg[9];
-    document.getElementById("zAccel").innerHTML = msg[10];
-    document.getElementById("xMag").innerHTML = msg[11];
-    document.getElementById("yMag").innerHTML = msg[12];
-    document.getElementById("zMag").innerHTML = msg[13];
-    document.getElementById("gpsLat").innerHTML = msg[14];
-    document.getElementById("gpsLon").innerHTML = msg[15];
-    document.getElementById("range").innerHTML = msg[16];
+    document.getElementById("displayTemp").innerHTML = msg[0];
+    document.getElementById("displayBarometer").innerHTML = msg[1];
+    document.getElementById("displayAccel_x").innerHTML = msg[2];
+    document.getElementById("displayAccel_y").innerHTML = msg[3];
+    document.getElementById("displayAccel_z").innerHTML = msg[4];
+    document.getElementById("displayLat").innerHTML = msg[5];
+    document.getElementById("displayLon").innerHTML = msg[6];
+    document.getElementById("displayMotion").innerHTML = msg[7];
   } else {
     alert("Unexpected Signal... System may need to be reset. \nProceed With Caution.");
   }
@@ -246,8 +224,9 @@ socket.on('message', function (msg) {
     htmlRightAnalog.textContent = currentDriveR;
     htmlPitch.textContent = Math.round(currentPitch);
     htmlYaw.textContent = Math.round(currentYaw);
-    htmlbaseAngle.textContent = currentBase;
+    htmlBaseAngle.textContent = currentBase;
     htmlLights.textContent = currentLightsStatus;
+    htmlBuzzer.textContent = currentBuzzer
 
     // controllerCode to send to python
     controllerCode = [
@@ -256,15 +235,12 @@ socket.on('message', function (msg) {
       Math.round(currentPitch),
       Math.round(currentYaw),
       currentBase,
-      currentLightsStatus
+      currentLightsStatus,
+      currentBuzzer
     ];
     console.log(controllerCode);
     socket.send(controllerCode); // Send out to Receive more
   }
-
-  mapElement.setAttribute("center", `${msg[14]},${msg[15]}`);
-  mapElement.setAttribute("zoom", `15`);
-  mapCurrentPosition.setAttribute("position", `${msg[14]},${msg[15]}`);
 });
 
 socket.on('disconnect',function(){

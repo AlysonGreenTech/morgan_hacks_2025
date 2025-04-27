@@ -56,9 +56,9 @@ def handleMsg(msg):
                    motion_detection])
     else:
         mc.drive(msg[0],msg[1])
-        mc.actuation(msg[2],msg[3],msg[4],msg[5])
-        effect.led(msg[6])
-        effect.buzzer(msg[7])
+        mc.actuation(msg[2],msg[3],msg[4])
+        effect.led(msg[5])
+        effect.buzzer(msg[6])
         socketio.send([temp, barometer,
                    accel_x, accel_y, accel_z,
                    gps_lat, gps_lon,

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Project STARVE </title>
+    <title>Project EMBER </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/owl-carousel/css/owl.carousel.min.css')}}">
@@ -82,32 +82,20 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <!-- <li class="nav-label first"><b>Environment Sensors</b></li> -->
-                    <li class="nav-label first"> Voltage <span class="badge badge-primary badge-pill"><span id = displayVoltage>---</span>V</span></li>
-                    <li class="nav-label first"> Humidity<span class="badge badge-primary badge-pill">INT: <span id = displayInternalHumidity>---</span>%</span><br><span class="badge badge-primary badge-pill">EXT: <span id = displayExternalHumidity>---</span>%</span></li>
-                    <li class="nav-label first"> Temperature<span class="badge badge-primary badge-pill">INT:<span id = displayInternalTemp>---</span>°C</span><br><span class="badge badge-primary badge-pill">EXT: <span id = displayExternalTemp>---</span>°C</span></li>
+                    <li class="nav-label first"> Temperature <span class="badge badge-primary badge-pill"><span id = displayTemp>---</span>°C</span></li>
+                    <li class="nav-label first"> Barometer<span class="badge badge-primary badge-pill"><span id = displayInternalHumidity>---</span>%</span></li>
                 </ul>
-
-                <!-- <ul class="metismenu" id="menu">
-                    <li class="nav-label first"><b>Quick Controls</b></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Deploy Payload</button></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Retract Payload</button></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Get RF Distance</button></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Toggle Lights</button></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Return Home</button></li>
-                    <li class="nav-label first"><button class="btn btn-primary" type="button">Set Waypoint</button></li>
-                </ul> -->
 
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first"><b>Manual Controls</b></li>
-                    <!-- <li><button type="button" class="btn btn-success">Connected</button></li> -->
                     <li><button type="button" class="btn btn-danger" id="ctrlStatus">
                         L:<span id="leftDriveCtrl">--</span> 
                         R:<span id="rightDriveCtrl">--</span> 
                         P:<span id="pitchDriveCtrl">--</span> 
                         Y:<span id="yawDriveCtrl">--</span> 
-                        H:<span id="heightDriveCtrl">--</span> 
                         B:<span id="baseAngle">--</span> 
                         LIG:<span id="lightsCtrl">--</span> 
+                        Horn:<span id="buzzer">--</span>
                     </button></li>
                     
                 </ul>
