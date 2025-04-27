@@ -5,7 +5,7 @@ import time
 
 def getGPS():  # returns lat, lon
     random.seed(time.time())
-    return [random.randint(0, 100), random.randint(0, 100), random.randint(0, 100)]
+    return [random.randint(0, 100), random.randint(0, 100)]
     # try:
     #     # Run the command with sudo privileges
     #     process = subprocess.Popen(
